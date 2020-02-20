@@ -1,18 +1,16 @@
-let _promise=function(param){
-    return new Promise(function (resolve,reject){
-        windiw.setTimeout(function(){
-            if(param){
-                resolve("해결완료");
-            }
-            else({
-                reject(Error("실패!"));
-            },3000);
-        });
-    });
-};
-_promise(true)
-.then(function(text){
-    console.log(text)
-},function(error){
-    console.error(error);
-});
+new Promise(function(resolve, reject){
+    setTimeout(function() {
+      resolve(1);
+    }, 2000);
+  })
+  .then(function(result) {
+    console.log(result); // 1
+    return result + 10;
+  })
+  .then(function(result) {
+    console.log(result); // 11
+    return result + 20;
+  })
+  .then(function(result) {
+    console.log(result); // 31
+  });

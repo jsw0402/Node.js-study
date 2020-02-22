@@ -56,5 +56,6 @@ let async_address=async (addr)=>{
 };
 
 country(address);
+async_country(address).then(async_province).then(async_city).then((result)=>console.log("Promise2: ",result))
 promise_address(address);
 async_address(address);

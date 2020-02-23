@@ -13,7 +13,7 @@ const country=(addr)=>{
     return province(addr);
 };
 
-let promise_address=(addr)=>{
+const promise_address=(addr)=>{
     return new Promise((resolve,reject)=>{
         resolve(addr+='대한민국 ');
     }).then(addr=>{
@@ -25,25 +25,25 @@ let promise_address=(addr)=>{
     });
 }
 
-let async_country=(addr)=>{
+const async_country=(addr)=>{
     return new Promise((resolve,reject)=>{
         resolve(addr+="대한민국 ");
     });
 };
 
-let async_province=(addr)=>{
+const async_province=(addr)=>{
     return new Promise((resolve,reject)=>{
         resolve(addr+="경기도 ");
     });
 };
 
-let async_city=(addr)=>{
+const async_city=(addr)=>{
     return new Promise((resolve,reject)=>{
         resolve(addr+="용인시 ");
     });
 };
 
-let async_address=async (addr)=>{
+const async_address=async (addr)=>{
     try{
         let country=await async_country(addr);
         let province=await async_province(country);

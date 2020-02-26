@@ -3,7 +3,9 @@ const express=require('express');
 const app=express();
 const bodyParser=require('body-parser');
 
-let users={};
+let users=[];
+
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/',(req,res)=>{
     res.redirect('/signup');
@@ -19,19 +21,18 @@ app.get('/signup',(req,res)=>{
 });
 
 app.post('/signup',(req,res)=>{
-    fs.readFile('./6.Middlewares/hw/signup.html',(err,body)=>{
-        const userId=req.body.userId;
-        const password=req.body.password;
-        if (userId in users){
+    const userId=req.body.userId;
+    const password=req.body.password; 
+    for(i=0;i<users.length;i++){
+    if (users[i]['Id']==userId){
             res.send('Users already exits');
-            res.redirect('/login');
-        }
-        else{
-            users[userId]=password;
-            res.redirect('/login');
         };
-    });  
+    };
+    users.push({'Id':userId,'password':password});
+    console.log(users);
+    res.redirect('/login');
 });
+
 
 app.get('/login',(req,res)=>{
     fs.readFile('./6.Middlewares/hw/login.html',(err,data)=>{
@@ -39,6 +40,24 @@ app.get('/login',(req,res)=>{
         res.end(data);
     });
 });
+
+app.post('/login',(req,res)=>{
+    const userId=req.body.userId;
+    const password=req.body.password; 
+    for(i=0;i<users.length;i++){
+    if (users[i]['Id']==userId){
+            if(users[i]['password']==password){
+                res.send('Welcome'+userId+'!');
+            }
+            else{
+                res.send('password wrong');
+            };
+        }else if(i==(users.length-1)){
+        res.send('Id wrong');
+        };
+    };
+});
+
 
 app.listen(3000,()=>{
     console.log('Server is running on port 3000');

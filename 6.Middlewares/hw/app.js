@@ -22,16 +22,21 @@ app.get('/signup',(req,res)=>{
 
 app.post('/signup',(req,res)=>{
     const userId=req.body.userId;
-    const password=req.body.password; 
+    const password=req.body.password;
+    let found=false;
     for(i=0;i<users.length;i++){
-    if (users[i]['Id']==userId){
-            res.send('Users already exits');
+        if (users[i]['Id']==userId){
+                res.send('<script type="text/javascript">alert("user already exists");location.href="/signup";</script>');
+                found=true;
         };
     };
-    users.push({'Id':userId,'password':password});
-    console.log(users);
-    res.redirect('/login');
+    if(!found){
+        users.push({'Id':userId,'password':password});
+        console.log(users);
+        res.redirect('/login');
+    }
 });
+
 
 
 app.get('/login',(req,res)=>{
